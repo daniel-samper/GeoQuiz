@@ -32,6 +32,10 @@ public class QuizActivity extends AppCompatActivity {
 
     };
 
+    private Boolean[] btnchecked = new Boolean[]{
+            true,true,true,true,true,true
+    };
+
     private int mCurrentIndex = 0;
 
     @Override
@@ -59,14 +63,17 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+
             }
         });
+
 
         mFalseButton = (Button) findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
+
             }
         });
 
@@ -139,6 +146,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updateQuestion(){
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        mTrueButton.setEnabled(btnchecked[mCurrentIndex]);
+        mFalseButton.setEnabled(btnchecked[mCurrentIndex]);
     }
 
     private void  checkAnswer(boolean userPressedTrue){
@@ -153,5 +162,7 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this,messageResId,Toast.LENGTH_SHORT).show();
+        btnchecked[mCurrentIndex]=false;
+        updateQuestion();
     }
 }
