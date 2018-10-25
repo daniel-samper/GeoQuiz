@@ -37,6 +37,8 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int mark = 0;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,7 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
-        updateQuestion();
+        //updateQuestion();
 
 
     }
@@ -148,6 +150,7 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
         mTrueButton.setEnabled(btnchecked[mCurrentIndex]);
         mFalseButton.setEnabled(btnchecked[mCurrentIndex]);
+
     }
 
     private void  checkAnswer(boolean userPressedTrue){
@@ -157,11 +160,17 @@ public class QuizActivity extends AppCompatActivity {
 
         if (userPressedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
+            mark += 1;
         } else {
             messageResId = R.string.incorrect_toast;
         }
 
         Toast.makeText(this,messageResId,Toast.LENGTH_SHORT).show();
+        counter += 1;
+        if (counter == btnchecked.length){
+            mark = (mark*100)/btnchecked.length;
+            Toast.makeText(this, "Has acertado "+mark+"%",Toast.LENGTH_SHORT).show();
+        }
         btnchecked[mCurrentIndex]=false;
         updateQuestion();
     }
